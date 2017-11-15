@@ -6,7 +6,7 @@
 
 - Install pipenv
   ```bash
-  pip install pipenv
+  sudo -H pip install pipenv
   ```
 - Install dependencies
   ```bash
@@ -16,6 +16,7 @@
 ##### Running project
 
 ```bash
+sudo service elasticsearch start  # Start elasticsearch
 pipenv shell
 python india-kanoon-nigrani/start.py <number of threads>
 ```
