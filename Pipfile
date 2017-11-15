@@ -1,0 +1,20 @@
+[[source]]
+
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.python.org/simple"
+
+
+[dev-packages]
+
+
+
+[packages]
+
+requests = "*"
+elasticsearch = "*"
+
+
+[requires]
+
+python_version = "3.5"
