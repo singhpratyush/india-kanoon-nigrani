@@ -3,7 +3,6 @@ import threading
 import queue
 import traceback
 import time
-import random
 from html.parser import HTMLParser
 
 import requests
@@ -60,7 +59,7 @@ def search(query_dict):
     print('Performing search: %s' % query_dict)
     keyword = query_dict['keyword']
     page = query_dict['page']
-    time.sleep(random.uniform(1, 10))
+    time.sleep(5)
     response = http_session.post('https://api.indiankanoon.org/search/?formInput=%s&pagenum=%s' % (keyword, page))
     resp_json = response.json()
     for doc in resp_json['docs']:
@@ -74,7 +73,7 @@ def search(query_dict):
 
 
 def load_doc(doc_id):
-    time.sleep(random.uniform(1, 10))
+    time.sleep(5)
     response = http_session.post('https://api.indiankanoon.org/doc/%s/' % doc_id)
     resp_json = response.json()
     index = resp_json['divtype']
