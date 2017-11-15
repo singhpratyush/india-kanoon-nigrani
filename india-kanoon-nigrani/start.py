@@ -1,8 +1,8 @@
 import sys
 import threading
-import queue
 import traceback
 import time
+from random import shuffle
 from html.parser import HTMLParser
 
 import requests
@@ -10,12 +10,34 @@ import elasticsearch
 
 es = elasticsearch.Elasticsearch()
 
-work_queue = queue.Queue()
+
+class WorkQueue():
+    def __init__(self):
+        self._queue = []
+        self._lock = threading.Lock()
+
+    def __len__(self):
+        return len(self._queue)
+
+    def put(self, task):
+        with self._lock:
+            self._queue.append(task)
+
+    def get(self):
+        with self._lock:
+            shuffle(self._queue)
+            return self._queue.pop()
+
+    def qsize(self):
+        return len(self)
+
+
+work_queue = WorkQueue()
 doc_set = set()
 search_set = set()
 
 http_session = requests.Session()
-http_session.headers.update({'Authorization': 'Token 6ea37009e37c7fb51e5dcdeb7ab001b7ac8aa733'})
+http_session.headers.update({'Authorization': 'Token c5f8198fc82933df0bc328b5fe65125c9e7fe34a'})
 
 seed_queries = ['india+doctypes:judgments', 'supremecourt+doctypes:judgments', 'delhi+doctypes:judgments',
                 'bombay+doctypes:judgments', 'kolkata+doctypes:judgments', 'chennai+doctypes:judgments',
